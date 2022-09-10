@@ -1,0 +1,141 @@
+-- Tables Created
+
+CREATE TABLE PlayerInformation
+( PlayerID int,
+FirstName varchar(50),
+LastName varchar(50),
+Nationality varchar(50),
+Age int,
+DominantFoot varchar(50),
+PrimaryPosition varchar(50),
+Appearances int,
+)
+
+CREATE TABLE PlayerFinanceInformation
+(PlayerID int,
+WeeklyWage int,
+PurchasePrice int,
+TransferValue int,
+ContactExpiry date,
+)
+
+-- Inserting Information into the Tables
+
+INSERT INTO PlayerInformation VALUES
+(1001,'David','Seaman','English',34,'Right','Goalkeeper', 254),
+(1002,'Gary', 'Neville','English', 26, 'Right','Defender', 58),
+(1003,'Gareth', 'Bale', 'Welsh', 19, 'Left', 'Attacker', 8),
+(1004,'Paul', 'Pogba', 'French', 18, 'Right', 'Midfielder', 16),
+(1005, 'Steve', 'Finnan', 'Irish', 24, 'Right', 'Defender', 31),
+(1006, 'Sergio', 'Ramos', 'Spainish', 21, 'Right', 'Defender', 7),
+(1007, 'Luis', 'Figo', 'Portuguese', 31, 'Right', 'Midfielder', 124),
+(1008, 'Roy', 'Keane','Irish', 30, 'Right','Midfielder', 96),
+(1009, 'Andrew', 'Cole', 'English', 32, 'Right', 'Attacker', 57),
+(1010, 'Ian', 'Rush', 'Welsh', 33, 'NULL', 'Attacker', 187),
+(1011, 'Alan', 'Hansen' , 'Scottish', 30, 'Right', 'Defender', 145),
+(1012, 'Lilian','Thuram', 'French', 22, 'Right', 'Defender', 24),
+(1013, 'Roberto', 'Carlos', 'Brazilian', 25, 'Left', 'Defender', 85),
+(1014, 'Shay', 'Given', 'Irish', 23, 'Right', 'Goalkeeper', 5),
+(1015, 'Steven', 'Gerrard', 'English', 22, 'Right', 'Midfielder', 9),
+(1016, 'Marc', 'Overmars', 'Dutch', 24, 'Right', 'Midfielder', 36),
+(1017, 'Tim', 'Howard', 'American', 18, 'Right', 'Goalkeeper', 1),
+(1018, 'Robbie', 'Keane', 'Irish', 26, 'Right', 'NULL', 91),
+(1019, 'Michael', 'Owen' , 'English', 22, 'Right', 'Attacker', 28),
+(1020, 'Michael', 'Carrick', 'English', 29, 'Right', 'Midfielder',200)
+
+INSERT INTO PlayerFinanceInformation VALUES
+(1002, 95000, 0, 10000000, '2025-06-30'),
+(1003, 45000, 0, 6000000, '2027-07-31'),
+(1004, 75000, 0, 15000000, '2026-05-31'),
+(1005, 130000, 5000000, 20000000, '2025-06-30'),
+(1006, 35000, 2500000, 8000000, '2023-07-31'),
+(1007, 150000, 7500000, 22000000, '2022-06-30'),
+(1008, 145000, 2350000, 5000000, '2024-08-31'),
+(1009, 124000, 800000, 15000000, '2026-04-30'),
+(1010, 90000, 1600000, 4750000, '2022-06-30'),
+(1011, 175000, 8500000, 35000000, '2023-03-30'),
+(1012, 110000, 5000000, 45000000, '2027-05-31'),
+(1013, 180000, 25000000, 75000000, '2027-06-30'),
+(1014, 68000, 1750000, 35000000, '2026-06-30'),
+(1015, 75000, 0, 45000000, '2027-06-30'),
+(1016, 135000, 15500000, 85000000, '2027-06-30'),
+(1017, 35000, 1500000, 5000000, '2024-06-30'),
+(1018, 110000, 4500000, 7000000, '2028-06-30'),
+(1019, 180000, 15000000, 150000000, '2026-06-30'),
+(1020, 105000, 0, 50000000, '2023-06-30')
+
+-- Name and Age of Squad Members
+
+SELECT FirstName, LastName, Age
+FROM PlayerInformation
+
+-- Total number in Squad
+
+SELECT COUNT(PlayerID) as SquadNumber
+FROM PlayerInformation
+
+-- Oldest Age in Squad
+
+SELECT MAX(Age)
+FROM PlayerInformation
+
+-- Youngest Age in Squad
+
+SELECT MIN(Age)
+FROM PlayerInformation
+
+--View Financial table
+
+SELECT *
+FROM PlayerFinanceInformation
+
+-- Average Salary
+
+SELECT AVG(WeeklyWage) as 'Average Weekly Wage'
+FROM PlayerFinanceInformation
+
+-- List of all the defenders in the Squad
+
+SELECT FirstName,LastName
+FROM PlayerInformation
+WHERE PrimaryPosition = 'Defender'
+
+-- List of all the players 30 years or older in the Squad
+
+SELECT FirstName, LastName, Age
+FROM PlayerInformation
+WHERE Age >= 30
+
+-- English Right Footed Players
+
+SELECT FirstName, LastName, DominantFoot
+FROM PlayerInformation
+WHERE Nationality = 'English' 
+AND DominantFoot='Right'
+
+-- French Players or 20 years old and younger
+
+SELECT *
+FROM PlayerInformation
+WHERE Nationality = 'French' 
+OR Age <=20
+
+-- Return all the information for players whos first name is David or Michael
+
+SELECT *
+FROM PlayerInformation
+WHERE FirstName IN ('David','Michael')
+
+-- Search for all player information for players whos first name starts with a 'S'
+
+SELECT *
+FROM PlayerInformation
+WHERE FirstName LIKE 'S%'
+
+-- Breakdown of Nationality in Squad in descending order
+
+SELECT Nationality, COUNT(Nationality) AS 'Count Of Players'
+FROM PlayerInformation
+GROUP BY Nationality
+ORDER BY 'Count Of Players'
+DESC
